@@ -1,0 +1,13 @@
+FROM mysql:latest
+
+# Définir les variables d'environnement pour la base de données
+ENV MYSQL_DATABASE=${MYSQL_DATABASE}
+ENV MYSQL_USER=${MYSQL_USER}
+ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
+ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+# Copier le script SQL d'initialisation
+COPY init_mysql.sql /docker-entrypoint-initdb.d/
+
+# Exposer le port MySQL
+EXPOSE 3306

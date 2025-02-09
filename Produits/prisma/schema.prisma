@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-py"
+  enable_experimental_decimal = true
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_MYSQL")
+}
+
+model Produits {
+  id             Int       @id @default(autoincrement())
+  nom            String    @db.VarChar(255)
+  categorie      String?   @db.VarChar(100)
+  prix           Decimal   @db.Decimal(10, 2)
+  stock          Int?      @default(0)
+  fournisseur_id Int?
+  date_ajout     DateTime? @default(now()) @db.Timestamp(0)
+  @@map("produits") // Dit à Prisma que la table en DB s'appelle "produits"
+}

@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-py"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model fournisseurs {
+  id            Int       @id @default(autoincrement())
+  nom           String    @db.VarChar(255)
+  adresse       String?
+  contact       String    @db.VarChar(100)
+  email         String?   @unique @db.VarChar(100)
+  date_creation DateTime? @default(now()) @db.Timestamp(6)
+}

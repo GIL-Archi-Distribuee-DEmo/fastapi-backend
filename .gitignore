@@ -1,0 +1,8 @@
+
+# Keep environment variables out of version control
+**/.env
+**/node_modules
+**/__pycache__/
+venv/
+docker-compose.kafka.yml
+minikube-linux-amd64

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: produits
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: produits
+  template:
+    metadata:
+      labels:
+        app: produits
+    spec:
+      containers:
+        - name: produits
+          image: produits-service
+          imagePullPolicy: Never
+          env:
+            - name: DATABASE_URL
+              value: "mysql://produit_user:password123@mysql-service:3306/produits_db"
+          ports:
+            - containerPort: 8002
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: produits-service
+spec:
+  selector:
+    app: produits
+  ports:
+    - protocol: TCP
+      port: 8002
+      targetPort: 8002
+  type: LoadBalancer

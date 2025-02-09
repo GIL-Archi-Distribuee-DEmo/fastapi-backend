@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fournisseurs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fournisseurs
+  template:
+    metadata:
+      labels:
+        app: fournisseurs
+    spec:
+      containers:
+        - name: fournisseurs
+          image: fournisseurs-service
+          imagePullPolicy: Never
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://fournisseur_user:password123@postgres-service:5432/fournisseurs_db"
+          ports:
+            - containerPort: 8001
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fournisseurs-service
+spec:
+  selector:
+    app: fournisseurs
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
+  type: LoadBalancer
